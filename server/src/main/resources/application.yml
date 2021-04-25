@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://cdb-3h6ed0fa.cd.tencentcdb.com:10098/iot
+    username: root
+    password: xcx123456
