@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface TempMapper {
 
-    @Select("select time,temperature from temp_tb")
+    @Select("select deviceId,time,temperature from temp_tb")
     List<Temp> getAllTemp();
 
     @Insert("insert into temp_tb(time,temperature) values(#{time,jdbcType=TIMESTAMP}),#{temperature}")
