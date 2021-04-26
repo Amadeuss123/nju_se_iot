@@ -11,8 +11,8 @@ export default function SensorLightOperation(props) {
   const { deviceId } = props;
   const getSensorLightInfo = useCallback(async () => {
     const result = await api.get(`/api/sensorlight/info/${deviceId}`);
-    console.log(result.data);
-    setInfo(result.data);
+    console.log('sensorlightinfo ', result);
+    setInfo(result);
   }, [deviceId]);
 
   useEffect(() => {

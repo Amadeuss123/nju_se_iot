@@ -106,7 +106,6 @@ export default function DeviceAdd() {
             <Form.Item label="光照监控" name="beam" required>
               <Radio.Group
                 style={{ display: "flex" }}
-                defaultValue={0}
                 onChange={(e) => {
                   if (e.target.value === 1) {
                     setIsSettingBeam(true);
@@ -121,13 +120,12 @@ export default function DeviceAdd() {
             </Form.Item>
             {isSettingBeam ? (
               <Form.Item label="光照设置" name="bstrength" required>
-                <Input addonBefore="光照强度小于" addonAfter="db" />
+                <Input addonBefore="光照强度小于" addonAfter="lx" />
               </Form.Item>
             ) : null}
             <Form.Item label="声音监控" name="sound" required>
               <Radio.Group
                 style={{ display: "flex" }}
-                defaultValue={0}
                 onChange={(e) => {
                   if (e.target.value === 1) {
                     setIsSettingSound(true);
@@ -142,7 +140,7 @@ export default function DeviceAdd() {
             </Form.Item>
             {isSettingSound ? (
               <Form.Item label="音量设置" name="sstrength" required>
-                <Input addonBefore="声音小于" addonAfter="db" />
+                <Input addonBefore="声音大于" addonAfter="db" />
               </Form.Item>
             ) : null}
           </>
