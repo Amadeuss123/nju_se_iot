@@ -3,7 +3,7 @@ import cn.nju.server.common.entity.Device
 import cn.nju.server.common.vo.SensorLightVo
 dialect "java"
 
-rule "light"
+rule "sound"
     when
         $protocol : Device(deviceType == "sensorLight",deviceRule.sound != null,deviceRule.sound > 20.0)
         $sensorLightVo : SensorLightVo()

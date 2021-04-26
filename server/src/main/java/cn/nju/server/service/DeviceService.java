@@ -38,4 +38,8 @@ public class DeviceService {
     public List<Device> listDevice() {
         return deviceMapper.listDevice();
     }
+
+    public void deleteDevice(String deviceId) {
+        deviceMapper.deleteDevice(deviceId);
+    }
 }
