@@ -4,13 +4,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class Temp {
+public class Humidity {
     private String deviceId;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date time;
 
     private String value;
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
     public Date getTime() {
         return time;
@@ -26,14 +34,5 @@ public class Temp {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-
-    public String getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
     }
 }

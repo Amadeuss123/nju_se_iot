@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class FileTest {
     @Test
     public void createFile() throws IOException {
-        float newBean = 40L;
+        float newBean = 40F;
         File file = ResourceUtils.getFile("classpath:rules/sensorLight-beam-rule.drl");
         String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(content);
