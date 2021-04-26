@@ -31,12 +31,6 @@ export default function DeviceList() {
   const [form] = Form.useForm();
   const history = useHistory();
 
-  const additionalOptions = {};
-
-  const additionalOptionsConfig = {
-    slight: [{}, {}],
-  };
-
   useEffect(() => {
     getDeviceList();
     return () => {
@@ -46,8 +40,8 @@ export default function DeviceList() {
 
   const getDeviceList = async () => {
     const result = await api.get("/api/device/list");
-    console.log(result.data.data);
-    setDeviceList(result.data.data);
+    console.log(result.data);
+    setDeviceList(result.data);
   };
 
   const deleteDevice = async (deviceId) => {
@@ -94,7 +88,7 @@ export default function DeviceList() {
             >
               <Button type="link">删除</Button>
             </Popconfirm>
-            <Button type="link" onClick={addRule}>
+            <Button type="link" onClick={()=>{}}>
               添加规则
             </Button>
           </Space>
@@ -140,8 +134,6 @@ export default function DeviceList() {
     // getDeviceList();
     // setShowModal(false);
   };
-
-  const addRule = () => {};
 
   const handleDetecting = () => {
     if (detecting) {

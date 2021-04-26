@@ -9,7 +9,7 @@ export default function RGBOperation(props) {
   const [rValue, setRValue] = useState(Number(localStorage.getItem(`${deviceId}-R`)) || 0);
   const [gValue, setGValue] = useState(Number(localStorage.getItem(`${deviceId}-G`)) || 0);
   const [bValue, setBValue] = useState(Number(localStorage.getItem(`${deviceId}-B`)) || 0);
-  
+
   useEffect(() => {
     api.post('/api/rgb/change', {
       deviceId,
@@ -66,7 +66,7 @@ export default function RGBOperation(props) {
   const RIcon = () => (
     <svg
       t="1619272839466"
-      class="icon"
+      className="icon"
       viewBox="0 0 1024 1024"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +90,7 @@ export default function RGBOperation(props) {
   const GIcon = () => (
     <svg
       t="1619272866648"
-      class="icon"
+      className="icon"
       viewBox="0 0 1024 1024"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -114,7 +114,7 @@ export default function RGBOperation(props) {
   const BIcon = () => (
     <svg
       t="1619272983110"
-      class="icon"
+      className="icon"
       viewBox="0 0 1024 1024"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
