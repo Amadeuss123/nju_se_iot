@@ -1,0 +1,12 @@
+package cn.nju.server
+import cn.nju.server.common.entity.Device
+import cn.nju.server.common.vo.SensorLightVo
+dialect "java"
+
+rule "light"
+    when
+        $protocol : Device(deviceType == "sensorLight",deviceRule.sound != null,deviceRule.sound > 20.0)
+        $sensorLightVo : SensorLightVo()
+    then
+        $sensorLightVo.setStatus(1);
+    end

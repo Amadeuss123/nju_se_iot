@@ -14,6 +14,16 @@ public class Device {
 
     private String token;
 
+    private Rule deviceRule;
+
+    public Rule getDeviceRule() {
+        return deviceRule;
+    }
+
+    public void setDeviceRule(Rule deviceRule) {
+        this.deviceRule = deviceRule;
+    }
+
     public String getDeviceId() {
         return deviceId;
     }
