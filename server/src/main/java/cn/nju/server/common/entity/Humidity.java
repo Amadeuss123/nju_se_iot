@@ -12,6 +12,15 @@ public class Humidity {
 
     private String value;
 
+    public Humidity() {
+    }
+
+    public Humidity(String deviceId, Date time, String value) {
+        this.deviceId = deviceId;
+        this.time = time;
+        this.value = value;
+    }
+
     public String getDeviceId() {
         return deviceId;
     }

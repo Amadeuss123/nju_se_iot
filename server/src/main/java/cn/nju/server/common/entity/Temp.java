@@ -12,6 +12,15 @@ public class Temp {
 
     private String value;
 
+    public Temp() {
+    }
+
+    public Temp(String deviceId, Date time, String value) {
+        this.deviceId = deviceId;
+        this.time = time;
+        this.value = value;
+    }
+
     public Date getTime() {
         return time;
     }
