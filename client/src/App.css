@@ -1,0 +1,13 @@
+body {
+  background-color: #fafafa;
+}
+
+#root {
+  background-color: #fafafa
+}
+
+.container {
+  margin: 50px 80px;
+  padding: 30px;
+  background-color: #fff;
+}
