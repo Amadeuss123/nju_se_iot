@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 const deviceRouter = require('./routes/device');
 const rgbRouter = require('./routes/rgb');
 const sensorRouter = require('./routes/sensor');
+const sensorLightRouter = require('./routes/sensorlight');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/device', deviceRouter);
 app.use('/rgb', rgbRouter);
 app.use('/sensor', sensorRouter);
+app.use('/sensorlight', sensorLightRouter);
 
 
 // catch 404 and forward to error handler

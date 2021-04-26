@@ -1,21 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Slider, PageHeader } from "antd";
 import debounce from "lodash/debounce";
 import api from "./api";
+import Bulb from './assets/Bulb';
 
 export default function RGBOperation(props) {
   const { deviceId } = props;
   const [rValue, setRValue] = useState(Number(localStorage.getItem(`${deviceId}-R`)) || 0);
   const [gValue, setGValue] = useState(Number(localStorage.getItem(`${deviceId}-G`)) || 0);
   const [bValue, setBValue] = useState(Number(localStorage.getItem(`${deviceId}-B`)) || 0);
-  // let rValue = useRef();
-  // let gValue = useRef();
-  // let bValue = useRef();
-  // const [flag, setFlag] = useState(false);
-  // const [rValue, setRValue] = useState(0);
-  // const [gValue, setGValue] = useState(0);
-  // const [bValue, setBValue] = useState(0);
-
+  
   useEffect(() => {
     api.post('/api/rgb/change', {
       deviceId,
@@ -44,7 +38,6 @@ export default function RGBOperation(props) {
     console.log("res ", res);
     return res;
   }
-  // console.log(bulb);
 
   const handleValue = (type) => {
     return debounce((value) => {
@@ -63,60 +56,12 @@ export default function RGBOperation(props) {
           break;
       }
     }, 50);
-    // return (value) => {
-    //   console.log(value);
-    //   switch (type) {
-    //     case "R":
-    //       setRValue(value);
-    //       break;
-    //     case "G":
-    //       setGValue(value);
-    //       break;
-    //     case "B":
-    //       setBValue(value);
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    //   api.post('/api/rgb/change', {
-    //     deviceId,
-    //     r: rValue,
-    //     g: gValue,
-    //     b: bValue,
-    //   })
-    // }
   };
 
   const sliderProps = {
     min: 0,
     max: 255,
   };
-
-  const Bulb = (props) => (
-    <svg
-      t="1619268976082"
-      class="icon"
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="2727"
-      width="128"
-      height="128"
-    >
-      <path
-        d="M674.133333 793.6H349.866667c-4.693333 0-8.533333-3.84-8.533334-8.533333v-147.413334c-85.12-57.386667-139.733333-154.453333-139.733333-258.133333 0-171.093333 138.453333-310.4 308.906667-310.4 170.24 0 308.906667 139.306667 308.906666 310.4 0 103.68-51.413333 203.306667-136.533333 260.693333v145.066667c-0.213333 4.48-4.053333 8.32-8.746667 8.32z m-264.533333-76.8h204.8v-112c0-2.986667 1.706667-5.76 4.266667-7.466667l11.946666-8.106666c74.24-43.306667 120.32-123.52 120.32-209.92 0-133.546667-107.946667-242.133333-240.64-242.133334s-240.64 108.586667-240.64 242.133334c0 86.186667 48.426667 166.613333 122.666667 209.92l12.8 7.466666c2.56 1.493333 4.266667 4.266667 4.266667 7.466667V716.8h0.213333zM674.133333 938.666667H349.866667c-4.693333 0-8.533333-3.84-8.533334-8.533334v-51.2c0-4.693333 3.84-8.533333 8.533334-8.533333h324.266666c4.693333 0 8.533333 3.84 8.533334 8.533333v51.2c0 4.693333-3.84 8.533333-8.533334 8.533334z"
-        p-id="2728"
-        // fill="#1296db"
-        {...props}
-      ></path>
-      <path
-        d="M499.2 561.706667l-28.16-19.413334c-3.84-2.773333-4.906667-7.893333-2.133333-11.946666l58.666666-84.693334-97.066666-80.853333c-3.626667-2.986667-4.053333-8.106667-1.28-11.733333l90.24-117.12c2.773333-3.84 8.32-4.48 11.946666-1.493334l27.093334 20.906667c3.84 2.773333 4.48 8.32 1.493333 11.946667L494.933333 352l95.573334 79.573333c3.413333 2.773333 4.053333 7.68 1.493333 11.306667l-80.853333 116.693333c-2.773333 3.84-8.106667 4.693333-11.946667 2.133334z"
-        p-id="2729"
-        // fill="#1296db"
-        {...props}
-      ></path>
-    </svg>
-  );
 
   const RIcon = () => (
     <svg
@@ -192,10 +137,12 @@ export default function RGBOperation(props) {
 
   return (
     <>
-      <PageHeader title="RGB灯信息" onBack={() => window.history.back()} />
+      <PageHeader title="RGB灯信息" subTitle={`设备编号${deviceId}`} onBack={() => window.history.back()} />
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Bulb fill={rgbToHex(rValue, gValue, bValue)} />
-        <div style={{ width: "70%", marginLeft: 50 }}>
+        <div style={{width: '30%', textAlign: 'center'}}>
+          <Bulb fill={rgbToHex(rValue, gValue, bValue)} />
+        </div>
+        <div style={{ width: "60%", marginLeft: 50 }}>
           <RIcon />
           <Slider {...sliderProps} onChange={handleValue("R")} defaultValue={rValue} />
           <GIcon />

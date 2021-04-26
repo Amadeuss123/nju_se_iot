@@ -1,10 +1,13 @@
-html, body {
-  margin: 0;
-  padding: 0;
+body {
+  background-color: #fafafa;
 }
 
+#root {
+  background-color: #fafafa
+}
 
 .container {
-  margin: 20px 50px;
-  /* border: 1px solid black; */
+  margin: 50px 80px;
+  padding: 30px;
+  background-color: #fff;
 }
