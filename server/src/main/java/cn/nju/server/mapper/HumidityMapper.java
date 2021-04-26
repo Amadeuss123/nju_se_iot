@@ -11,4 +11,7 @@ import java.util.List;
 public interface HumidityMapper {
     @Select("select deviceId,time,value from humidity_tb where deviceId = #{deviceId}")
     List<Humidity> getAllHumidity(String deviceId);
+
+    @Select("insert into humidity_tb(deviceId,time,value) values(#{deviceId},#{time,jdbcType=TIMESTAMP},#{value})")
+    void insertHumidity(Humidity humidity);
 }

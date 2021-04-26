@@ -13,6 +13,6 @@ public interface TempMapper {
     @Select("select deviceId,time,value from temp_tb where deviceId = #{deviceId}")
     List<Temp> getAllTemp(String deviceId);
 
-    @Insert("insert into temp_tb(time,temperature) values(#{time,jdbcType=TIMESTAMP}),#{temperature}")
+    @Insert("insert into temp_tb(deviceId,time,value) values(#{deviceId},#{time,jdbcType=TIMESTAMP},#{value})")
     void insertTemp(Temp temp);
 }

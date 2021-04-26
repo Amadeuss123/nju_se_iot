@@ -26,4 +26,12 @@ public class SensorService {
     public List<Humidity> getHumidityList(String deviceId) {
         return humidityMapper.getAllHumidity(deviceId);
     }
+
+    public void addTemp(Temp temp) {
+        tempMapper.insertTemp(temp);
+    }
+
+    public void addHumidity(Humidity humidity) {
+        humidityMapper.insertHumidity(humidity);
+    }
 }

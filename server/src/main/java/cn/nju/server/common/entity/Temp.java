@@ -7,7 +7,7 @@ import java.util.Date;
 public class Temp {
     private String deviceId;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     private String value;

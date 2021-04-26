@@ -26,13 +26,18 @@ public class SensorController {
     public IotResult info(@PathVariable String deviceId) {
         List<Temp> tempList = sensorService.getTempList(deviceId);
         List<Humidity> humidityList = sensorService.getHumidityList(deviceId);
-
+        Date date = new Date();
         Random random = new Random();
-        float temp = (float) (Math.round(random.nextFloat()*40*10))/10;
-        tempList.add(new Temp(deviceId,new Date(),String.valueOf(temp)));
+        float tempValue = (float) (Math.round(random.nextFloat()*40*10))/10;
+        Temp temp = new Temp(deviceId, date, String.valueOf(tempValue));
+        sensorService.addTemp(temp);
+        tempList.add(temp);
 
-        float humidity = (float) (Math.round(random.nextFloat()*100*10))/10;
-        humidityList.add(new Humidity(deviceId,new Date(),String.valueOf(humidity)));
+
+        float humidityValue = (float) (Math.round(random.nextFloat()*100*10))/10;
+        Humidity humidity = new Humidity(deviceId, date, String.valueOf(humidityValue));
+        sensorService.addHumidity(humidity);
+        humidityList.add(humidity);
 
         SensorVo sensorVo = new SensorVo();
         sensorVo.setTempList(tempList);

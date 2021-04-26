@@ -5,3 +5,5 @@ spring:
     url: jdbc:mysql://cdb-3h6ed0fa.cd.tencentcdb.com:10098/iot
     username: root
     password: xcx123456
+  jackson:
+      time-zone: GMT+8
