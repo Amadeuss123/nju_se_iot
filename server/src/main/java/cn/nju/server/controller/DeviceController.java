@@ -1,6 +1,7 @@
 package cn.nju.server.controller;
 
 import cn.nju.server.common.entity.Device;
+import cn.nju.server.common.vo.DeviceVo;
 import cn.nju.server.common.vo.IotResult;
 import cn.nju.server.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @RequestMapping("/device")
 @RestController
@@ -32,7 +35,20 @@ public class DeviceController {
     @RequestMapping("/list")
     public IotResult listDevice() {
         //TODO: deviceVO  http status
-        return IotResult.success(deviceService.listDevice());
+        List<Device> devices = deviceService.listDevice();
+
+        List<DeviceVo> deviceVoList = new ArrayList<>(devices.size());
+        Random random = new Random();
+        for (Device device : devices) {
+            int status = (int) (0.5 + random.nextFloat());
+            DeviceVo deviceVo = new DeviceVo();
+            deviceVo.setDevice(device);
+            deviceVo.setStatus(status);
+            deviceVoList.add(deviceVo);
+        }
+
+
+        return IotResult.success(deviceVoList);
     }
 
     @RequestMapping("/delete/{deviceId}")
