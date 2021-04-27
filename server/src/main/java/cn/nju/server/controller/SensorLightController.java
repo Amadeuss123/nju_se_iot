@@ -91,15 +91,11 @@ public class SensorLightController {
         System.out.println(ruleMap.toString());
         Rule rule = new Rule();
         Random random = new Random();
-        if (ruleMap.containsKey("beam")) {
-            float beamValue = (float) (Math.round(random.nextFloat()*100*10))/10;
-            rule.setBeam(beamValue);
-        }
+        float beamValue = (float) (Math.round(random.nextFloat()*100*10))/10;
+        rule.setBeam(beamValue);
 
-        if (ruleMap.containsKey("sound")) {
-            float soundValue = (float) (Math.round(random.nextFloat()*100*10))/10;
-            rule.setSound(soundValue);
-        }
+        float soundValue = (float) (Math.round(random.nextFloat()*100*10))/10;
+        rule.setSound(soundValue);
         System.out.println(rule);
         return rule;
     }
