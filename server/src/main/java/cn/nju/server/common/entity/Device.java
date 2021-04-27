@@ -55,4 +55,6 @@ public class Device {
     public void setToken(String token) {
         this.token = token;
     }
+
+
 }

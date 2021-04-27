@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -17,22 +18,27 @@ public class DeviceService {
     @Autowired
     private DeviceMapper deviceMapper;
 
-    @Resource
-    private KieContainer kieContainer;
+    @Autowired
+    private RuleEngineService ruleEngineService;
 
-    public String addDevice(Device device) {
+    public String addDevice(Device device) throws IOException {
         String token = TokenUtils.generateToken(device.getDeviceId());
         device.setToken(token);
 
         if (device.getDeviceRule() != null) {
-
+            handleRule(device);
         }
-        KieSession kieSession = kieContainer.newKieSession();
-
-
-
-        deviceMapper.insertDevice(device);
+        //deviceMapper.insertDevice(device);
         return token;
+    }
+
+    private void handleRule(Device device) throws IOException {
+        if (device.getDeviceRule().getBeam() != null) {
+            ruleEngineService.reload("beam",device.getDeviceRule().getBeam(),device);
+        }
+        if (device.getDeviceRule().getSound() != null) {
+            ruleEngineService.reload("sound",device.getDeviceRule().getSound(),device);
+        }
     }
 
     public List<Device> listDevice() {

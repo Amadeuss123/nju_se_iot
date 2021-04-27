@@ -66,28 +66,28 @@
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-decisiontables</artifactId>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-templates</artifactId>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
         </dependency>
 
         <dependency>
             <groupId>org.kie</groupId>
             <artifactId>kie-api</artifactId>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
@@ -110,7 +110,13 @@
                     <artifactId>spring-context</artifactId>
                 </exclusion>
             </exclusions>
-            <version>7.0.0.Final</version>
+            <version>7.19.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

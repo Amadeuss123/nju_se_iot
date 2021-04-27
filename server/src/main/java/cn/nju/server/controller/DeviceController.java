@@ -9,10 +9,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +30,7 @@ public class DeviceController {
     private RestTemplate restTemplate;
 
     @RequestMapping("/add")
-    public IotResult addDevice(Device device) {
+    public IotResult addDevice(@RequestBody Device device) throws IOException {
         return IotResult.success(deviceService.addDevice(device));
     }
 

@@ -15,6 +15,7 @@ public class FileTest {
     public void createFile() throws IOException {
         float newBeam = 34F;
         File file = ResourceUtils.getFile("classpath:rules/sensorLight-beam-rule.drl");
+
         String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
         System.out.println(content);
         System.out.println(replaceContent(newBeam, content));
@@ -25,8 +26,10 @@ public class FileTest {
         String[] lines = content.split("\\r?\\n");
         for(int i = 0; i < lines.length; i++){
             if(lines[i].trim().startsWith("$protocol")){
-                int end = lines[i].indexOf('>');
-                lines[i] = lines[i].substring(0, end + 1) + " "+ beam + ")";
+                int end = lines[i].indexOf('>') == -1 ? lines[i].indexOf('<') : lines[i].indexOf('>');
+                if(end != -1){
+                    lines[i] = lines[i].substring(0, end + 1) + " "+ beam + ")";
+                }
             }
         }
         StringBuilder sb = new StringBuilder();
