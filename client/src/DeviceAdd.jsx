@@ -8,9 +8,9 @@ import {
   Radio,
   Button,
   Space,
-  Modal
+  Modal,
 } from "antd";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 import api from "./api";
 
@@ -34,19 +34,31 @@ export default function DeviceAdd() {
       deviceId: form.getFieldValue("deviceId"),
       deviceType: form.getFieldValue("deviceType"),
       expireDate: form.getFieldValue("expireDate").format("yy-MM-DD hh:mm:ss"),
-      rules: {
+      deviceRule: {
         beam: form.getFieldValue("bstrength"),
         sound: form.getFieldValue("sstrength"),
       },
     };
-    console.log(body);
+
+    if (body.deviceRule.beam) {
+      localStorage.setItem(
+        `${form.getFieldValue("deviceId")}-beam`,
+        form.getFieldValue("bstrength")
+      );
+    }
+    if (body.deviceRule.sound) {
+      localStorage.setItem(
+        `${form.getFieldValue("deviceId")}-sound`,
+        form.getFieldValue("sstrength")
+      );
+    }
     const result = await api.post("/api/device/add", body);
-    console.log(result);
+    // console.log(result);
     Modal.success({
-      title: '添加成功',
-      content: `token为${result.data.data}`,
-    })
-    history.push('/device/list');
+      title: "添加成功",
+      content: `token为${result.data}`,
+    });
+    history.push("/device/list");
   };
 
   return (
@@ -68,7 +80,7 @@ export default function DeviceAdd() {
             },
           ]}
         >
-          <Input placeholder="请输入设备编号"/>
+          <Input placeholder="请输入设备编号" />
         </Form.Item>
         <Form.Item
           label="设备类型"
@@ -96,9 +108,7 @@ export default function DeviceAdd() {
           </Select>
         </Form.Item>
         <Form.Item label="过期时间" name="expireDate" required>
-          <DatePicker
-            showTime
-          />
+          <DatePicker showTime />
         </Form.Item>
 
         {showAdditionalOptions ? (

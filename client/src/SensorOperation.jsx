@@ -12,6 +12,12 @@ export default function SensorOperation(props) {
   console.log('sensorData ', sensorData);
 
   const convertData = useCallback(({ tempList, humidityList }) => {
+    // if(tempList.length >= 30) {
+    //   tempList = tempList.slice(tempList.length - 30);
+    // }
+    // if(humidityList.length >= 30) {
+    //   humidityList = humidityList.slice(humidityList.length - 30);
+    // }
     const res =  {
       temperatureData: tempList.map((data) => (
         {
@@ -54,16 +60,13 @@ export default function SensorOperation(props) {
     };
   }, [loadData]);
 
-  useEffect(() => {
-    loadData();
-  }, [loadData]);
-
   const config = {
     data: [...sensorData.temperatureData, ...sensorData.humidData],
     padding: "auto",
     xField: "time",
     yField: "value",
     seriesField: "type",
+    // smooth: true,
     // slider: {
     //   start: 0.1,
     //   end: 0.5,
@@ -89,7 +92,7 @@ export default function SensorOperation(props) {
       <div style={{ display: "flex", marginTop: 30 }}>
         <div
           className="data"
-          style={{ width: "30%", fontSize: 20, marginLeft: 30 }}
+          style={{ width: "15%", fontSize: 20, marginLeft: 30 }}
         >
           <Title level={4} style={{ marginBottom: 15 }}>
             当前温度
@@ -102,9 +105,9 @@ export default function SensorOperation(props) {
           </Title>
           <Text keyboard>{`${
             sensorData.humidData[sensorData.humidData.length - 1]?.value
-          }℃`}</Text>
+          }%`}</Text>
         </div>
-        <div className="graph" style={{ width: "60%" }}>
+        <div className="graph" style={{ width: "80%" }}>
           <Title level={4} style={{ textAlign: "center", marginBottom: 15 }}>
             历史温、湿度
           </Title>

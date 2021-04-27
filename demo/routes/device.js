@@ -4,34 +4,47 @@ const { nanoid } = require('nanoid');
 
 let data = [
   {
+    device: {
+      deviceType: "rgb",
+      deviceId: "000001",
+    },
     key: 1,
-    deviceType: "rgb",
-    deviceId: "000001",
-    deviceStatus: "已连接",
+    status: 1,
   },
   {
+    device: {
+      deviceType: "rgb",
+      deviceId: "000002",
+    },
     key: 2,
-    deviceType: "rgb",
-    deviceId: "000002",
-    deviceStatus: "未连接",
+    status: 0,
   },
   {
+    device: {
+
+      deviceType: "sensor",
+      deviceId: "000003",
+    },
     key: 3,
-    deviceType: "sensor",
-    deviceId: "000003",
-    deviceStatus: "已连接",
+    status: 1,
   },
   {
+    device: {
+
+      deviceType: "sensor",
+      deviceId: "000004",
+    },
     key: 4,
-    deviceType: "sensor",
-    deviceId: "000004",
-    deviceStatus: "已连接",
+    status: 1,
   },
   {
+    device: {
+      deviceType: "sensor",
+      deviceId: "000005",
+
+    },
     key: 5,
-    deviceType: "sensor",
-    deviceId: "000005",
-    deviceStatus: "已连接",
+    status: 1,
   },
 ];
 
@@ -46,10 +59,12 @@ router.get("/list", (req, res) => {
 router.post("/add", (req, res) => {
   const { deviceId, deviceType, expireDate } = req.body;
   const newDevice = {
-    deviceId,
-    deviceType,
+    device: {
+      deviceId,
+      deviceType,
+    },
     expireDate,
-    deviceStatus: '未连接',
+    status: 1,
     token: nanoid(),
   }
   data.push(newDevice);

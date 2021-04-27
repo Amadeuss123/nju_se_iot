@@ -22,7 +22,13 @@ export default function DeviceList() {
   const [showModal, setShowModal] = useState(false);
   const [detecting, setDetecting] = useState(false);
   // const [showAdditionalOptions, setShowAdditionOptions] = useState(false);
-  const [deviceList, setDeviceList] = useState([]);
+  const [deviceList, setDeviceList] = useState([{
+    device: {
+      deviceId: 0,
+      deviceType: '',
+    },
+    status: 0,
+  }]);
   const timer = useRef(null);
   const deviceIdRef = useRef(null);
   const deviceTypeRef = useRef(null);
@@ -33,6 +39,7 @@ export default function DeviceList() {
 
   useEffect(() => {
     getDeviceList();
+    // const timer = setInterval(getDeviceList, 2000);
     return () => {
       clearInterval(timer.current);
     };
@@ -55,11 +62,12 @@ export default function DeviceList() {
   const columns = [
     {
       title: "设备编号",
-      dataIndex: "deviceId",
+      dataIndex: ["device", "deviceId"],
+      align: 'center',
     },
     {
       title: "设备类型",
-      dataIndex: "deviceType",
+      dataIndex: ['device', 'deviceType'],
       render: (text, record) => {
         switch(text) {
           case 'rgb': return 'RGB';
@@ -67,11 +75,20 @@ export default function DeviceList() {
           case 'sensorlight': return '感应灯';
           default: return '未识别';
         }
-      }
+      },
+      align: 'center',
     },
     {
       title: "设备状态",
-      dataIndex: "deviceStatus",
+      dataIndex: "status",
+      render: (text) => {
+        switch(text) {
+          case 0: return '未连接';
+          case 1: return '已连接';
+          default: return '未识别';
+        }
+      },
+      align: 'center',
     },
     {
       title: "操作",
@@ -79,18 +96,25 @@ export default function DeviceList() {
       render: (text, record) => {
         return (
           <Space>
-            <Link to={`/operate/${record.deviceType}/${record.deviceId}`}>查看</Link>
+            <Link to={`/operate/${record.device?.deviceType}/${record.device?.deviceId}`} onClick={(e) => {
+              if(record.status === 0) {
+                Modal.info({
+                  title:'设备未连接'
+                })
+                e.preventDefault();
+              }
+            }}>查看</Link>
             <Popconfirm
               okText="确定"
               cancelText="取消"
               title="你确定要删除该设备吗"
-              onConfirm={() => deleteDevice(record.deviceId)}
+              onConfirm={() => deleteDevice(record.device.deviceId)}
             >
               <Button type="link">删除</Button>
             </Popconfirm>
-            <Button type="link" onClick={()=>{}}>
+            {/* <Button type="link" onClick={()=>{}}>
               添加规则
-            </Button>
+            </Button> */}
           </Space>
         );
       },
@@ -293,7 +317,7 @@ export default function DeviceList() {
       <Table
         columns={columns}
         dataSource={deviceList}
-        rowKey={(record) => record.deviceId}
+        rowKey={(record) => record.device?.deviceId}
       />
       <DeviceModal />
     </>
