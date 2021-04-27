@@ -33,6 +33,7 @@ public class DeviceService {
     }
 
     private void handleRule(Device device) throws IOException {
+        System.out.println("handle: " + device.getDeviceRule());
         if (device.getDeviceRule().getBeam() != null) {
             ruleEngineService.reload("beam",device.getDeviceRule().getBeam(),device);
         }

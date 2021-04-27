@@ -88,6 +88,7 @@ public class SensorLightController {
 
     private Rule getRule(String deviceId) {
         Map<String, Float> ruleMap = kieCache.getRule(deviceId);
+        System.out.println(ruleMap.toString());
         Rule rule = new Rule();
         Random random = new Random();
         if (ruleMap.containsKey("beam")) {
@@ -99,6 +100,7 @@ public class SensorLightController {
             float soundValue = (float) (Math.round(random.nextFloat()*100*10))/10;
             rule.setSound(soundValue);
         }
+        System.out.println(rule);
         return rule;
     }
 }

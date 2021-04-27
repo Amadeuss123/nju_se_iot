@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class RuleEngineService {
@@ -66,9 +67,15 @@ public class RuleEngineService {
     }
 
     private void refresh(String ruleName, Device device, float value) {
-        HashMap<String,Float> map = new HashMap<>();
-        map.put(ruleName,value);
-        kieCache.addRule(device.getDeviceId(),map);
+        Map<String, Float> ruleMap = kieCache.getRule(device.getDeviceId());
+        if (ruleMap == null) {
+            ruleMap = new HashMap<>();
+        }
+        ruleMap.put(ruleName,value);
+        kieCache.addRule(device.getDeviceId(),ruleMap);
+        System.out.println("======================");
+        System.out.println(kieCache.getRule(device.getDeviceId()).toString());
+        System.out.println("======================");
     }
 
     private String replaceContent(float newValue, String content){

@@ -31,6 +31,7 @@ public class DeviceController {
 
     @RequestMapping("/add")
     public IotResult addDevice(@RequestBody Device device) throws IOException {
+        System.out.println(device.getDeviceRule());
         return IotResult.success(deviceService.addDevice(device));
     }
 
