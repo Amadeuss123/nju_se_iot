@@ -28,7 +28,7 @@ public class DeviceService {
         if (device.getDeviceRule() != null) {
             handleRule(device);
         }
-        //deviceMapper.insertDevice(device);
+        deviceMapper.insertDevice(device);
         return token;
     }
 

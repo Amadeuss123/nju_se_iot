@@ -1,8 +1,6 @@
 package cn.nju.server.controller;
 
-import cn.nju.server.common.entity.Device;
-import cn.nju.server.common.entity.People;
-import cn.nju.server.common.entity.Rule;
+import cn.nju.server.common.entity.*;
 import cn.nju.server.common.util.KieCache;
 import cn.nju.server.common.vo.IotResult;
 import cn.nju.server.common.vo.SensorLightVo;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Random;
 
 @RestController
 @RequestMapping("sensorlight")
@@ -29,80 +29,76 @@ public class SensorLightController {
     @Autowired
     private RuleEngineService ruleEngineService;
 
-    @Autowired
+    @Resource
     private KieSession kieSession;
+
 
     @RequestMapping("/info/{deviceId}")
     public IotResult info(@PathVariable String deviceId) throws IOException {
-        People people = new People();
-        people.setName("达");
-        people.setSex(0);
-        people.setDrlType("people");
-
-        kieSession.insert(people);//插入
-        kieSession.fireAllRules();//执行规则
-        kieSession.dispose();//释放资源
 
 
         //TODO  数据库返回device
-        /*Device device = new Device();
+        Device device = new Device();
         device.setDeviceId(deviceId);
         device.setDeviceType("sensorLight");
-        Rule rule = new Rule();
-        rule.setSound(150F);
-        rule.setBeam(150F);
-        rule.setDeviceId("1");
+
+
+        Rule rule = getRule(deviceId);
+        rule.setDeviceId(deviceId);
         device.setDeviceRule(rule);
-        //KieSession kieSession = kieCache.getKieContainer(deviceId).newKieSession();
-        KieHelper kieHelper = new KieHelper();
 
-        kieHelper.addContent(rule2Drl(), ResourceType.DRL);
-        //KieSession kieSession = kieHelper.build().newKieSession();
-
-
-        People people = new People();
-        people.setName("达");
-        people.setSex(1);
-        people.setDrlType("people");
-
-
-        kieSession.insert(people);
+        //verify
+        kieSession.insert(device);
         SensorLightVo sensorLightVo = new SensorLightVo();
-        //kieSession.insert(sensorLightVo);
+        kieSession.insert(sensorLightVo);
         kieSession.fireAllRules();
-        System.out.println(sensorLightVo.getStatus());
-        kieSession.dispose();*/
-        return IotResult.success(null);
+        boolean status = verify(device);
+
+        if (rule.getBeam() != null) {
+            sensorLightVo.setBeam(rule.getBeam());
+        }
+        if (rule.getSound() != null) {
+            sensorLightVo.setSound(rule.getSound());
+        }
+        if (status) {
+            sensorLightVo.setStatus(1);
+        } else {
+            sensorLightVo.setStatus(0);
+        }
+        return IotResult.success(sensorLightVo);
     }
 
-    public String rule2Drl() {
+    private boolean verify(Device device) {
+        Map<String, Float> ruleMap = kieCache.getRule(device.getDeviceId());
+        boolean beamStatus = true;
+        if (ruleMap.containsKey("beam")) {
+            System.out.println("beam : " + ruleMap.get("beam"));
+            beamStatus = device.getDeviceRule().getBeam() < ruleMap.get("beam");
+        }
+        boolean soundStatus = true;
+        if (ruleMap.containsKey("sound")) {
+            System.out.println("sound : " + ruleMap.get("sound"));
+            soundStatus = device.getDeviceRule().getSound() > ruleMap.get("sound");
+        }
 
-        StringBuilder result = new StringBuilder();
-        /*package部分*/
-        result.append("package cn.nju.server.rule1;\r\n");
-        result.append("\r\n");
+        System.out.println(beamStatus);
+        System.out.println(soundStatus);
+        return beamStatus && soundStatus;
+    }
 
-        /*导包部分*/
-        //result.append("import cn.nju.server.common.vo.SensorLightVo;\r\n");
-        result.append("import cn.nju.server.common.entity.Rule;\r\n");
-        result.append("import java.util.List;\r\n");
-        result.append("\r\n");
+    private Rule getRule(String deviceId) {
+        Map<String, Float> ruleMap = kieCache.getRule(deviceId);
+        Rule rule = new Rule();
+        Random random = new Random();
+        if (ruleMap.containsKey("beam")) {
+            float beamValue = (float) (Math.round(random.nextFloat()*100*10))/10;
+            rule.setBeam(beamValue);
+        }
 
-        /*规则申明部分*/
-        result.append("rule \"32353242\"\r\n");
-
-        /*规则属性部分*/
-
-        /*规则条件部分*/
-        result.append("\twhen\r\n");
-        result.append("\t\tRule(deviceId==\"1\")\r\n");
-
-        /*规则结果部分*/
-        result.append("\tthen\r\n");
-        result.append("\t\tSystem.out.println(\"动态加载的规则被触发了\");\r\n");
-
-        /*规则结束*/
-        result.append("end\r\n");
-        return result.toString();
+        if (ruleMap.containsKey("sound")) {
+            float soundValue = (float) (Math.round(random.nextFloat()*100*10))/10;
+            rule.setSound(soundValue);
+        }
+        return rule;
     }
 }

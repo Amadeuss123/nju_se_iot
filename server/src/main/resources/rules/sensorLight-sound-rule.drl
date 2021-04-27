@@ -3,7 +3,7 @@ import cn.nju.server.common.entity.Device
 import cn.nju.server.common.vo.SensorLightVo
 dialect "java"
 
-rule "beam"
+rule "sound"
     when
         $sensorLightVo : SensorLightVo()
     then

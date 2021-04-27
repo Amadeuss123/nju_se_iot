@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface DeviceMapper {
     @Insert({"insert into device_tb(deviceId, deviceType,expireDate,token) values(#{deviceId},#{deviceType}," +
-            "#{expireDate, jdbcType=TIMESTAMP}),#{token}"})
+            "#{expireDate, jdbcType=TIMESTAMP},#{token})"})
     void insertDevice(Device device);
 
     @Select("select deviceId,deviceType,expireDate from device_tb")

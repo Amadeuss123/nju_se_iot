@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 @Service
 public class RuleEngineService {
@@ -29,7 +30,7 @@ public class RuleEngineService {
 
 
     public String getDrl() throws IOException {
-        String fileName = "classpath:rules/people.drl";
+        String fileName = "classpath:rules/sensorLight-sound-rule.drl";
         File file = ResourceUtils.getFile(fileName);
         return FileUtils.readFileToString(file, StandardCharsets.UTF_8);
     }
@@ -61,6 +62,13 @@ public class RuleEngineService {
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
         kieBuilder.buildAll();
         kieCache.addKieContainer(device.getDeviceId(),kieServices.newKieContainer(kieRepository.getDefaultReleaseId()));
+        refresh(ruleName,device,value);
+    }
+
+    private void refresh(String ruleName, Device device, float value) {
+        HashMap<String,Float> map = new HashMap<>();
+        map.put(ruleName,value);
+        kieCache.addRule(device.getDeviceId(),map);
     }
 
     private String replaceContent(float newValue, String content){

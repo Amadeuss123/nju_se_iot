@@ -15,6 +15,8 @@ public class KieCache {
 
     private Map<String, KieFileSystem> kfMap = new HashMap<>();
 
+    private Map<String,Map<String,Float>> ruleMap = new HashMap<>();
+
     public void addKieContainer(String deviceId, KieContainer kieContainer) {
         this.kcMap.put(deviceId,kieContainer);
     }
@@ -37,5 +39,13 @@ public class KieCache {
 
     public KieFileSystem getKieFileSystem(String deviceId) {
         return this.kfMap.get(deviceId);
+    }
+
+    public void addRule(String deviceId,Map<String,Float> rule) {
+        this.ruleMap.put(deviceId,rule);
+    }
+
+    public Map<String,Float> getRule(String deviceId) {
+        return this.ruleMap.get(deviceId);
     }
 }
